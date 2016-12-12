@@ -24,7 +24,7 @@ describe('Testing platforms =>',function(){
       });
 
       //
-      it('getKey() should be function',function(){
+      it('should have a function getKey()',function(){
         assert.isFunction(platform.getKey,'getKey() is function');
       });
 
@@ -34,23 +34,30 @@ describe('Testing platforms =>',function(){
       });
 
       //
-      it('should export xhr',function(){
+      it('should have a propery xhr',function(){
         assert.isDefined(platform.xhr,'xhr is exported');
       });
 
       //
-      it('xhr should be function',function(){
+      it('should have a function xhr()',function(){
         assert.isFunction(platform.xhr,'xhr is function')
-      })
+      });
 
       //
-      it('xhr should make web request',function(done){
+      it('should have a function dbInit', function(){
+          assert.isFunction(platform.dbInit,'dbInit is a function');
+      });
+
+
+
+      //
+      it('xhr() should make web request',function(done){
         this.timeout(15000);//timeout for web request
         platform.xhr({
             method: 'get',
             url: 'https://google.com'
           }).then(function(res){
-            console.log(res.status);
+            console.log(res.status,'HTTP: Request status');
             assert.equal(1,1,'xhr made ajax request successfully!!');
             done();
           }).catch(function(res){
@@ -59,10 +66,11 @@ describe('Testing platforms =>',function(){
           })
       });
 
-      //
+      //New statement
     });
   }
 });
+
 
 
 describe('Test all platforms are tested',function(){
