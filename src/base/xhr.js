@@ -2,7 +2,11 @@ import axios from 'axios';
 
 let PROXY_URL = null;
 
-export default function xhr(options){
+export function setXHRProxyUrl(proxyUrl){
+  PROXY_URL =  proxyUrl;
+}
+
+export  function xhr(options){
   let config = {};
   let useProxy = !!options.useProxy;
   let proxyUrl = options.useProxy;

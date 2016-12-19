@@ -1,5 +1,5 @@
 import init from './database/init';
-import xhr from '../base/xhr.js';
+import {xhr,setXHRProxyUrl} from '../base/xhr.js';
 
 var platform = {
   getKey:function(){
@@ -8,9 +8,7 @@ var platform = {
 
   xhr: xhr,
 
-  setXHRProxyUrl: function(proxyUrl){
-    PROXY_URL =  proxyUrl;
-  },
+  setXHRProxyUrl: setXHRProxyUrl,
 
   dbInit:init
 }
