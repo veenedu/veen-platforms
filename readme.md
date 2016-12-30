@@ -5,55 +5,68 @@ Provides common interface for multiple platforms.
 
 ---
 
-## XHR
+### How to use
 
-Use XHR to make web requests. Its' a very lightweight wrapper that wraps axios (https://github.com/mzabriskie/axios)
-
-###### Why to use it?
-> - Different devices/platforms have different ways to make web requests
-> - We are trying to provide common interface for all reuqests
-> - Cross browser requests are still a problem (yes we know we have CORS)
-> - For cross browser requests we need to set up a proxy server, and repeat the code, with this we do it once.
-
-
-#### Examples
-
-Sample domain request
 ```js
 import {web} from 'veen-platforms'
-web.xhr(options)
+web.getKey() //This returns platfor key, a string.
 ```
 
-Cross domain requests
+### Platforms
+
+web, ios, android
+
+
+# API
+
+* getKey()
+* setProxyUrl
+* normalizeAjaxOptions
+* launchAuthFlow
+
+### setProxyUrl, normalizeAjaxOptions
+
+A little utility to proxy web requests. You can use any ajax libabry to make web requets, which follows the same options as ('axios')[https://github.com/mzabriskie/axios].   There are 2 ways normalize ajax options
+
 ```js
 import {web} from 'veen-platforms'
+import axios from 'axios';
 
-#Method 1
-web.setXHRProxyUrl('your_proxy_server_url');
+//Method 1
+//Proxy a single request
+
 var options= {
-	url:'some_other_server_url',
+    url:'some_other_server_url',
+    useProxy:'your_proxy_server_url',//proxy server
+    data:{...}
+};
+
+axios(web.normalizeAjaxOptions(options));
+
+
+//Method 2
+//Set proxy once and just tell in request
+web.setProxyUrl('your_proxy_server_url');
+
+var options= {
+    url:'some_other_server_url',
     useProxy:true,
     data:{...}
 };
-web.ajax(options);
-
-//->With this method you set proxy server once, and use it in subsequest requests. by setting property 'useProxy:true'
 
 
-#Method 2
-var options= {
-	url:'some_other_server_url',
-    useProxy:'your_proxy_server_url'
-};
-web.ajax(options)
-
-//->This method is usefull to override or default proxy server, or make one time request.
+axios(web.normalizeAjaxOptions(options));
 
 ```
 
-##### Proxy server
+You Should always normaliz the ajax requests, when `useProxy` is missing in options, options are return as it it.
 
-For web proxyserver should run on same origin as host. Requests to proxy servers are made thorugh 'POST' method.
+
+
+
+##### A sample Proxy server
+
+For web, proxy-server should run on same origin as host. Requests to proxy servers are made thorugh 'POST' method.
 
 A sample node.js proxy server (server is based on express.js)
 
