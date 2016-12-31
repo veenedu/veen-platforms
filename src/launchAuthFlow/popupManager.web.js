@@ -11,9 +11,9 @@ const AUTH_WINDOW_NAME = "AUTHWINDOW";
  */
 function handleRedirect() {
 		if (window.name == AUTH_WINDOW_NAME || (window.opener && window.opener.handler)) {
-				var url = window.location
+				var url = window.location.href;
 				window.opener.handler(url);
-				window.close();	
+				window.close();
 		}
 }
 
@@ -42,7 +42,7 @@ function waitForRedirect(callbacks) {
 		function handler(redirectUrl) {
 				clearTimeout(timeoutHandler);
 				window.handler = undefined; //remove window handler
-				
+
 				setTimeout(function () {
 						callbacks.onSuccess(redirectUrl);
 				}, 1);
