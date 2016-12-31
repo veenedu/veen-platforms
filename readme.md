@@ -82,3 +82,14 @@ app.post('/p/webrequest',function(req,res){
 });
 
 ```
+
+
+### launchAuthFlow
+
+Call this to launch pop window to authenticate.  
+
+
+`launchAuthFlow(formattedUrl, callbacks)`
+
+
+callbacks => {onError, onSuccess, onCancel}

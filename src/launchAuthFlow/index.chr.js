@@ -1,3 +1,10 @@
+/**
+ * onSuccess(redirect_url) -> returns redirect url, you have to parse 
+ * url based on service
+ */
+
+//TODO:  Check what happens when user closes popup window.
+
 export function launchAuthFlow(formattedUrl, callbacks) {
   try {
     chrome.identity.launchWebAuthFlow({
@@ -6,23 +13,9 @@ export function launchAuthFlow(formattedUrl, callbacks) {
     }, function (redirect_url) {
 
       //you get redirect URL
-
-      var a = redirect_url.split("#")[1];
-      var url = decodeURIComponent(a.split("=")[1]);
-      var index = url.indexOf("?code");
-      var search = url.slice(index, url.length - 1);
-      var str = search.slice(1, search.length);
-      var arr = str.split("&");
-      var obj = {};
-      for (var i = 0; i < arr.length; i++) {
-        var chunk = arr[i].split("=");
-        obj[chunk[0]] = chunk[1];
-      }
-
-      callbacks.onSuccess(obj);
+      callbacks.onSuccess(redirect_url);
     });
   } catch (e) {
-    console.log('2');
-    console.log(e);
+    callbacks.onError();
   }
 }
